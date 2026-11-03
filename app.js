@@ -1,7 +1,7 @@
 // Medico landing page. No dependencies. Jobs: capture click IDs, run the 6-step form, sticky mobile CTA.
 
 // Lead destination: Apps Script web app (../leads-backend) -> Sheet + email + Monday. Set "TODO..." to disable sending.
-const ENDPOINT = "https://script.google.com/macros/s/AKfycbx1g_WrKHgaOzbo_6C-hdKMbKo81CJuiCEla1V_m6XKL_YZjwhYQIjCXXA0zledpht5Jw/exec";
+const ENDPOINT = !window.LIVE ? "TODO: preview, not the live address" : "https://script.google.com/macros/s/AKfycbx1g_WrKHgaOzbo_6C-hdKMbKo81CJuiCEla1V_m6XKL_YZjwhYQIjCXXA0zledpht5Jw/exec";
 
 const TRACK = ["gclid", "wbraid", "gbraid", "fbclid", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id"];
 const $ = (s, r = document) => r.querySelector(s);
@@ -173,7 +173,7 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
     bar.style.width = `${((i + 1) / steps.length) * 100}%`;
     back.hidden = i === 0;
     const last = i === steps.length - 1;
-    next.textContent = last ? "Tell Us About My Clinic" : "Continue";
+    next.textContent = last ? "Pick My Call Time" : "Continue";
     next.type = last ? "submit" : "button";
     // One-tap steps have no Continue: tapping an answer moves on (Sandy, 24 Sep). The button only shows
     // on the contact step, or when the out-of-area note needs reading.
@@ -263,7 +263,7 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
     form.dataset.grade = data.lead_grade; // exposed for the QA test only
     // The thank-you page reads these to greet the visitor by name and echo their project back.
     // sessionStorage, never the URL: a name in a URL leaks into analytics and referrers.
-    const thanks = { name: (data.full_name || "").trim().split(/\s+/)[0], project_type: data.project_type,
+    const thanks = { name: (data.full_name || "").trim().split(/\s+/)[0], full_name: (data.full_name || "").trim(), email: (data.email || "").trim(), project_type: data.project_type,
       clinic_type: data.clinic_type, size: data.size, opening: data.opening, region: data.region,
       preview: ENDPOINT.startsWith("TODO") };
     // The browser Lead also fires on the thank-you page (same event_id, Meta dedups). 6 Oct audit: the redirect below
@@ -311,7 +311,7 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
       setTimeout(go2, 2000); // ad blockers never call back
     } catch (err) {
       msg.textContent = "That didn't send. Please try again, or call 604-644-4120.";
-      next.disabled = false; next.textContent = "Tell Us About My Clinic";
+      next.disabled = false; next.textContent = "Pick My Call Time";
     }
   });
 

@@ -2,12 +2,15 @@
 <html lang="en-CA">
 <head>
 <meta charset="utf-8">
+<!-- v2 safety switch: tags, pixels and the lead pipe run ONLY on build.medicoconstruction.com. Anywhere else (the GitHub preview) nothing is sent. -->
+<script>window.LIVE=location.hostname==="build.medicoconstruction.com";if(!LIVE){window.fbq=function(){};window.clarity=function(){};}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Thank you | Medico Construction &amp; Design</title>
+<title>Pick your call time | Medico Construction &amp; Design</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/medico-favicon-192.png">
 <link rel="preload" href="assets/fonts/montserrat-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
 <style>
 .ty{padding:64px 0 80px;background:linear-gradient(180deg,var(--tint),#fff 75%)}
 .ty .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:start}
@@ -44,19 +47,19 @@
 @media (max-width:720px){.ty{padding:36px 0 56px}.next3,.types{grid-template-columns:1fr}.type{aspect-ratio:16/10}}
 </style>
 <!-- GA4 G-HSJ06CG134 (ZippyScale-owned property "Medico - build.medicoconstruction.com"). Page views only; the lead event fires on the form page. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HSJ06CG134"></script>
+<script>if(LIVE){var s=document.createElement("script");s.async=1;s.src="https://www.googletagmanager.com/gtag/js?id=G-HSJ06CG134";document.head.appendChild(s);}</script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-HSJ06CG134");</script>
 <!-- 14 Oct: Google Ads backstop. The form page fires the conversion before redirecting; if that hit was cut off, this
      re-sends it with the SAME transaction_id, so Google counts the lead once either way. Only for a lead the backend
      accepted (gads_tid is set after success, never for junk), and only once per tab. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-NCTZ3T2L"></script>
+<script>if(LIVE){var s=document.createElement("script");s.async=1;s.src="https://www.googletagmanager.com/gtag/js?id=GT-NCTZ3T2L";document.head.appendChild(s);}</script>
 <script>gtag("config","GT-NCTZ3T2L");
 (function () { try { var d = JSON.parse(sessionStorage.getItem("medico_thanks") || "{}");
   if (d.gads_tid && sessionStorage.getItem("medico_gads_fired") !== d.gads_tid) {
     gtag("event", "conversion", { send_to: "AW-716871487/0XCcCLGxyIsdEL-u6tUC", transaction_id: d.gads_tid });
     sessionStorage.setItem("medico_gads_fired", d.gads_tid); } } catch (e) {} })();</script>
 <!-- Microsoft Clarity yqdd3hg3fm: recordings + heatmaps. Sessions tagged by channel; "lead" event on a successful send. -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yqdd3hg3fm");</script>
+<script>if(LIVE)(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yqdd3hg3fm");</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -80,10 +83,11 @@
 <section class="ty">
   <div class="wrap grid">
     <div>
-      <p class="preview" id="preview" hidden>Preview: the form isn't connected yet, so nothing was sent.</p>
+      <p class="preview" id="preview" hidden>Preview copy (v2): nothing was sent to Medico.</p>
       <svg class="done" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
-      <h1 data-in="1" id="tyh">Thanks. Your clinic project is with our team.</h1>
-      <p class="lead" data-in="2">A Medico project specialist will review your details and contact you about the next step.</p>
+      <h1 data-in="1" id="tyh">Now pick a time for your discovery call.</h1>
+      <p class="lead" data-in="2" id="tyl">30 minutes, any day from 5am to 11pm. Your answers are already with Medico, so you won't repeat yourself.</p>
+      <a class="btn" href="#book" data-in="3">Pick My Call Time</a>
       <ul class="proof" data-in="3" aria-label="Ratings and credentials">
         <li><svg class="g"><use href="#i-g"/></svg><span><b>5.0 <i aria-hidden="true">★★★★★</i></b>Google rating</span></li>
         <li><span class="bbb" aria-hidden="true">BBB</span><span><b>A+</b>BBB rating</span></li>
@@ -99,12 +103,20 @@
   </div>
 </section>
 
+<section class="sec" id="book">
+  <div class="wrap">
+    <div class="head"><h2>Choose your call time</h2></div>
+    <div class="calbox" id="cal"></div>
+    <p class="calfall">Calendar not loading? <a id="calurl" href="https://calendly.com/medicoconstruction/30min" target="_blank" rel="noopener">Open it in a new tab</a> or call <a href="tel:+16046444120">604-644-4120</a>.</p>
+  </div>
+</section>
+
 <section class="sec">
   <div class="wrap">
     <div class="head"><h2>What happens next</h2></div>
     <ol class="next3" data-anim="rise">
-      <li><h3>We review your project</h3><p>Your answers go to a Medico project specialist before anyone calls you.</p></li>
-      <li><h3>We call you</h3><p>We talk through the space, the clinic you're planning and your opening date.</p></li>
+      <li><h3>We review your project</h3><p>Your answers reach Medico before the call.</p></li>
+      <li><h3>Your discovery call</h3><p>At the time you picked, we talk through the space, the clinic you're planning and your opening date.</p></li>
       <li><h3>A no-cost site assessment</h3><p>We look at the space with you. Design fees are $0 when Medico builds your project.</p></li>
     </ol>
     <div class="ready"><b>Have these handy for the call:</b> the address or listing, a floor plan or lease draft if you have one, and your target opening date.</div>
@@ -152,7 +164,7 @@ fbq("init","1088731400165523", medicoAm);fbq("track","PageView");
   let d = {};
   try { d = JSON.parse(sessionStorage.getItem("medico_thanks") || "{}"); } catch (e) {}
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  if (d.name) document.getElementById("tyh").textContent = `Thanks, ${d.name}. Your clinic project is with our team.`;
+  if (d.name) document.getElementById("tyh").textContent = `Thanks, ${d.name}. Now pick a time for your discovery call.`;
   if (d.preview) document.getElementById("preview").hidden = false;
   const rows = [["Project", d.project_type], ["Clinic", d.clinic_type], ["Space", d.size], ["Opening", d.opening], ["Location", d.region]].filter(r => r[1]);
   if (rows.length) {
@@ -172,5 +184,25 @@ fbq("init","1088731400165523", medicoAm);fbq("track","PageView");
 })();
 </script>
 <script src="motion.js" defer></script>
+<!-- Booking calendar. Interim: Medico's existing Calendly. ponytail: swap BOOKING_URL (and this embed) to the cal.com event once it exists (5am-11pm, 7 days). -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async onload="medicoCal()"></script>
+<script>
+var BOOKING_URL = "https://calendly.com/medicoconstruction/30min";
+function medicoCal() {
+  var d = {}; try { d = JSON.parse(sessionStorage.getItem("medico_thanks") || "{}"); } catch (e) {}
+  Calendly.initInlineWidget({ url: BOOKING_URL + "?hide_gdpr_banner=1", parentElement: document.getElementById("cal"),
+    prefill: { name: d.full_name || "", email: d.email || "" } });
+}
+// Booked: say so, and count it (GA4 + Meta Schedule; both are switched off outside the live address).
+window.addEventListener("message", function (e) {
+  if (e.origin !== "https://calendly.com" || !e.data || e.data.event !== "calendly.event_scheduled") return;
+  var d = {}; try { d = JSON.parse(sessionStorage.getItem("medico_thanks") || "{}"); } catch (x) {}
+  document.getElementById("tyh").textContent = "You're booked" + (d.name ? ", " + d.name : "") + ".";
+  document.getElementById("tyl").textContent = "The invite is in your inbox. We'll talk at the time you picked.";
+  if (typeof gtag === "function") gtag("event", "book_call", { send_to: "G-HSJ06CG134" });
+  if (typeof fbq === "function") fbq("track", "Schedule");
+  if (typeof clarity === "function") clarity("event", "booked");
+});
+</script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 <html lang="en-CA">
 <head>
 <meta charset="utf-8">
+<!-- v2 safety switch: tags, pixels and the lead pipe run ONLY on build.medicoconstruction.com. Anywhere else (the GitHub preview) nothing is sent. -->
+<script>window.LIVE=location.hostname==="build.medicoconstruction.com";if(!LIVE){window.fbq=function(){};window.clarity=function(){};}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Medical Clinic Construction in BC &amp; Alberta | Medico Construction &amp; Design</title>
 <meta name="description" content="Medical clinic design and construction in British Columbia and Alberta. Planning, permit drawings, construction and handover under one team. 100+ clinics built.">
@@ -12,13 +14,13 @@
 <link rel="stylesheet" href="styles.css">
 <!-- Google Ads tag (Medico account 711-193-7872). The lead conversion fires from app.js on a successful send only. -->
 <!-- Loader is the account's Google tag GT-NCTZ3T2L: gtag/js?id=AW-716871487 returns 404 (checked 30 Sep 2026). -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-NCTZ3T2L"></script>
+<script>if(LIVE){var s=document.createElement("script");s.async=1;s.src="https://www.googletagmanager.com/gtag/js?id=GT-NCTZ3T2L";document.head.appendChild(s);}</script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","GT-NCTZ3T2L",{allow_enhanced_conversions:true});gtag("config","G-HSJ06CG134"); // carries destination AW-716871487; configuring AW directly fetches a 404 container</script>
 <!-- Meta pixel "Medico new (R)". PageView here; Lead fires from app.js on a successful send, deduplicated
      against the server-side Conversions API event (same event_id) sent by the Apps Script lead pipe. -->
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1088731400165523");fbq("track","PageView");</script>
 <!-- Microsoft Clarity yqdd3hg3fm: recordings + heatmaps. Sessions tagged by channel; "lead" event on a successful send. -->
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yqdd3hg3fm");</script>
+<script>if(LIVE)(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","yqdd3hg3fm");</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -62,8 +64,9 @@
 
     <div class="formcol">
     <div class="card formcard" id="start">
-      <div class="f-top"><p class="f-title">Tell us about your clinic</p><p class="f-count" id="fcount" aria-live="polite">Step 1 of 7</p></div>
+      <div class="f-top"><p class="f-title">Book your discovery call</p><p class="f-count" id="fcount" aria-live="polite">Step 1 of 7</p></div>
       <div class="f-bar" aria-hidden="true"><i id="fbar"></i></div>
+      <p class="f-hrs"><b>Seeing patients all day?</b> Discovery calls run 5am to 11pm, 7 days a week.</p>
       <form id="lead" novalidate>
         <input type="hidden" name="page" value="medical" id="pagev">
         <div class="sr" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -151,7 +154,7 @@
 
         <fieldset class="step" hidden>
           <legend>Where should we contact you about the project?</legend>
-          <p class="callnote">A Medico project specialist will call this number to talk through your space.</p>
+          <p class="callnote">Next you pick a time for your 30-minute discovery call.</p>
           <div class="fields">
             <div class="field full"><label for="nm">Full name</label><input id="nm" name="full_name" autocomplete="name" required><p class="err">Add your name.</p></div>
             <div class="field"><label for="ph">Phone</label><input id="ph" name="phone" type="tel" inputmode="tel" autocomplete="tel" required><p class="err">Add a 10-digit phone number.</p></div>
@@ -165,7 +168,7 @@
               </div><p class="err">Choose one.</p></div>
             <details class="field full notes"><summary>+ Add project notes <span>(optional)</span></summary><textarea id="no" name="notes" rows="3" aria-label="Project notes"></textarea></details>
           </div>
-          <p class="micro">A Medico project specialist will review your details and contact you about the next step. No obligation.</p>
+          <p class="micro">Your answers go to Medico before the call, so you won't repeat yourself. No obligation.</p>
         </fieldset>
 
         <div class="f-nav">
@@ -174,7 +177,7 @@
         </div>
         <p class="f-msg" id="fmsg" role="alert"></p>
       </form>
-      <div class="f-foot"><span>Takes about 60 seconds</span><a href="privacy.html">Privacy policy</a></div>
+      <div class="f-foot"><span>60 seconds, then pick your call time</span><a href="privacy.html">Privacy policy</a></div>
     </div>
     </div>
     <div class="band">
@@ -390,11 +393,26 @@
   </div>
 </section>
 
+<!-- 9b. THE CALL (v2, appointment setting) -->
+<section class="sec tint" id="call">
+  <div class="wrap">
+    <div class="head"><h2>Your 30-minute discovery call</h2><p>Book a time that works around your patients. Early mornings and late evenings are open.</p></div>
+    <ol class="next3" data-anim="rise">
+      <li><h3>Pick a time that suits you</h3><p>Calls run 5am to 11pm, 7 days a week, so you don't have to step away from patients.</p></li>
+      <li><h3>Talk through your space</h3><p>The clinic you're planning, the space, its size and your opening date. Have the address, a floor plan or a lease draft handy if you have one.</p></li>
+      <li><h3>Leave with the next steps</h3><p>What your space will need and the main design, approval and construction milestones around your opening date. Next comes a no-cost site assessment.</p></li>
+    </ol>
+    <a class="btn" href="#start" data-goform>Book My Discovery Call</a>
+  </div>
+</section>
+
 <!-- 10. FAQ -->
 <section class="sec faq" id="faq">
   <div class="wrap grid">
     <div class="head"><h2>Questions clinic owners ask</h2></div>
     <div>
+      <details><summary>I'm with patients all day. When can we talk?</summary><p>Discovery calls run from 5am to 11pm, 7 days a week. Fill in the short form, then pick the time that works for you.</p></details>
+      <details><summary>What happens on the discovery call?</summary><p>It takes about 30 minutes. We talk through the clinic you're planning, your space and your opening date, then explain the next steps, starting with a no-cost site assessment. No obligation.</p></details>
       <details><summary data-v="faq1">How much does it cost to build a medical clinic?</summary><p>Clinic construction cost depends on the space, existing conditions, clinic type, equipment requirements, finishes and mechanical/electrical scope. Medico can assess the project before construction begins so you can better understand what will be involved.</p></details>
       <details><summary>How long does a clinic build take?</summary><p>Timelines vary by project size, permit requirements, existing conditions and scope. During planning, Medico identifies the major design, approval and construction milestones around your intended opening date.</p></details>
       <details><summary>Should I contact Medico before signing a lease?</summary><p>Yes. Bringing the construction team in early can help identify layout, electrical, plumbing, mechanical or permitting issues before you commit to a space.</p></details>
@@ -410,10 +428,10 @@
   <div class="wrap grid">
     <div>
       <h2>Planning a clinic? Start before construction starts.</h2>
-      <p>Tell us about your space, timeline and clinic. A Medico project specialist will review the project and contact you about the next step.</p>
-      <p class="small">Takes about 60 seconds.</p>
+      <p>Tell us about your space, timeline and clinic, then pick a time for your discovery call. Calls run 5am to 11pm, 7 days a week.</p>
+      <p class="small">60 seconds, then pick your call time.</p>
       <div class="acts">
-        <a class="btn" href="#start" data-goform>Tell Us About My Clinic</a>
+        <a class="btn" href="#start" data-goform>Book My Discovery Call</a>
         <a class="tel" href="tel:+16046444120">Prefer to talk? Call 604-644-4120</a>
       </div>
       <p class="trustline">Healthcare-focused · BC + Alberta · Licensed &amp; insured</p>
@@ -433,7 +451,7 @@
 </footer>
 
 <div class="stick" id="stick">
-  <a class="btn" href="#start" data-goform>Tell Us About My Clinic</a>
+  <a class="btn" href="#start" data-goform>Book My Discovery Call</a>
   <a class="btn ghost call" href="tel:+16046444120" aria-label="Call Medico"><svg><use href="#i-phone"/></svg></a>
 </div>
 
