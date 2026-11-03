@@ -350,7 +350,7 @@ function calendly(el, q) {
 function showCal(t, form, data) {
   form.hidden = true;
   $("#fcount").textContent = "Step 8 of 8"; $("#fbar").style.width = "100%";
-  $(".f-foot").hidden = true;
+  $(".f-foot").hidden = true; $(".f-hrs").hidden = true;
   const box = $("#fcal"); box.hidden = false;
   if (t.name) $("#fcalh").textContent = `Thanks, ${t.name}. Last step: pick your call time`;
   // Name + email go only to the booking calendar, never into this page's URL.
