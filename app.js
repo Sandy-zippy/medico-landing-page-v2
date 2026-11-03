@@ -169,8 +169,8 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
     steps.forEach((s, k) => { s.hidden = k !== i; s.classList.remove("in", "bad"); });
     const s = steps[i];
     void s.offsetWidth; s.classList.add("in");
-    count.textContent = `Step ${i + 1} of ${steps.length}`;
-    bar.style.width = `${((i + 1) / steps.length) * 100}%`;
+    count.textContent = `Step ${i + 1} of ${steps.length + 1}`; // +1: the booking calendar is the last step
+    bar.style.width = `${((i + 1) / (steps.length + 1)) * 100}%`;
     back.hidden = i === 0;
     const last = i === steps.length - 1;
     next.textContent = last ? "Pick My Call Time" : "Continue";
@@ -280,7 +280,8 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
         fn: await sha(nm[0] || ""), ln: await sha(nm.length > 1 ? nm[nm.length - 1] : ""), country: await sha("ca") };
       Object.keys(thanks.am).forEach(k => thanks.am[k] || delete thanks.am[k]);
     } catch (e) {}
-    const toThanks = () => { try { sessionStorage.setItem("medico_thanks", JSON.stringify(thanks)); } catch (e) {} location.href = "thank-you.html"; };
+    // v2: no thank-you page. The lead is saved, then the calendar opens in this card (step 8).
+    const toThanks = () => { try { sessionStorage.setItem("medico_thanks", JSON.stringify(thanks)); } catch (e) {} showCal(thanks, form, data); };
     // Not connected yet (Sandy: form destination comes last). Nothing is sent; the thank-you page says so.
     if (ENDPOINT.startsWith("TODO")) { toThanks(); return; }
     next.disabled = true; next.textContent = "Sending";
@@ -299,6 +300,9 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
       // event_id are not deduplicated against each other, only browser against server.
       if (typeof clarity === "function") { clarity("event", "lead"); clarity("set", "lead_grade", data.lead_grade); }
       let went = false; const go2 = () => { if (!went) { went = true; toThanks(); } };
+      // Meta browser Lead, same event_id as the server event (Meta counts it once). Was on the thank-you page.
+      if (thanks.meta_eid && typeof fbq === "function") fbq("track", "Lead", {}, { eventID: thanks.meta_eid });
+      window.medicoLeadSent = true;
       if (typeof gtag === "function") {
         const digits = data.phone.replace(/\D/g, "").replace(/^1/, "");
         gtag("set", "user_data", { email: data.email.trim().toLowerCase(), phone_number: "+1" + digits });
@@ -308,7 +312,7 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
         gtag("event", "conversion", { send_to: "AW-716871487/0XCcCLGxyIsdEL-u6tUC", transaction_id: data.submitted_at, transport_type: "beacon", event_callback: go2 });
         gtag("event", "generate_lead", { send_to: "G-HSJ06CG134", lead_grade: data.lead_grade, clinic_type: data.clinic_type, region: data.region, transport_type: "beacon" });
       }
-      setTimeout(go2, 2000); // ad blockers never call back
+      setTimeout(go2, 1500); // ad blockers never call back
     } catch (err) {
       msg.textContent = "That didn't send. Please try again, or call 604-644-4120.";
       next.disabled = false; next.textContent = "Pick My Call Time";
@@ -336,3 +340,40 @@ const AD_ANGLE = { "6920259109079": "space", "6920259104679": "expand", "6920259
   new IntersectionObserver(([e]) => { pastForm = !e.isIntersecting && e.boundingClientRect.top < 0; sync(); }).observe(target);
   const fin = $(".final"); if (fin) new IntersectionObserver(([e]) => { finalOn = e.isIntersecting; sync(); }).observe(fin);
 })();
+
+// 4. Booking calendar (v2). Interim: Medico's Calendly. ponytail: swap BOOK_URL to the cal.com event (5am-11pm) once it exists.
+const BOOK_URL = "https://calendly.com/medicoconstruction/30min";
+function calendly(el, q) {
+  const start = () => window.Calendly ? Calendly.initInlineWidget({ url: BOOK_URL + "?hide_gdpr_banner=1" + (q || ""), parentElement: el }) : setTimeout(start, 300);
+  start();
+}
+function showCal(t, form, data) {
+  form.hidden = true;
+  $("#fcount").textContent = "Step 8 of 8"; $("#fbar").style.width = "100%";
+  $(".f-foot").hidden = true;
+  const box = $("#fcal"); box.hidden = false;
+  if (t.name) $("#fcalh").textContent = `Thanks, ${t.name}. Last step: pick your call time`;
+  // Name + email go only to the booking calendar, never into this page's URL.
+  calendly($("#cal1"), (data.full_name ? "&name=" + encodeURIComponent(data.full_name.trim()) : "") + (data.email ? "&email=" + encodeURIComponent(data.email.trim()) : ""));
+  const r = $("#start").getBoundingClientRect();
+  scrollTo({ top: scrollY + r.top - 72, behavior: "smooth" });
+  $("#fcalh").focus({ preventScroll: true });
+}
+// The call section's calendar loads when it comes near the screen (keeps the first load fast).
+(function lazyCal() {
+  const el = $("#cal2"); if (!el) return;
+  const io = new IntersectionObserver(es => { if (es[0].isIntersecting) { io.disconnect(); calendly(el); } }, { rootMargin: "600px" });
+  io.observe(el);
+})();
+// Booked (either calendar): say so and count it. gtag/fbq/clarity do nothing off the live address.
+window.addEventListener("message", e => {
+  if (e.origin !== "https://calendly.com" || !e.data || e.data.event !== "calendly.event_scheduled") return;
+  if (!$("#fcal").hidden) { $("#fcalh").textContent = "You're booked."; $("#fcalsub").textContent = "The invite is on its way to your inbox. We'll call you at the time you picked."; }
+  if (typeof gtag === "function") {
+    gtag("event", "book_call", { send_to: "G-HSJ06CG134" });
+    // Booked straight from the call section, no form: count it as the lead (the form lead already counted otherwise).
+    if (!window.medicoLeadSent) gtag("event", "conversion", { send_to: "AW-716871487/0XCcCLGxyIsdEL-u6tUC", transaction_id: (e.data.payload && e.data.payload.event && e.data.payload.event.uri) || String(Date.now()) });
+  }
+  if (typeof fbq === "function") fbq("track", "Schedule");
+  if (typeof clarity === "function") clarity("event", "booked");
+});

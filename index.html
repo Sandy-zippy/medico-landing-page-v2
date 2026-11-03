@@ -12,6 +12,8 @@
 <link rel="preload" href="assets/fonts/montserrat-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero.webp" imagesrcset="assets/img/hero-960.webp 960w, assets/img/hero.webp 1600w" imagesizes="(max-width:1080px) 100vw, 640px">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <!-- Google Ads tag (Medico account 711-193-7872). The lead conversion fires from app.js on a successful send only. -->
 <!-- Loader is the account's Google tag GT-NCTZ3T2L: gtag/js?id=AW-716871487 returns 404 (checked 30 Sep 2026). -->
 <script>if(LIVE){var s=document.createElement("script");s.async=1;s.src="https://www.googletagmanager.com/gtag/js?id=GT-NCTZ3T2L";document.head.appendChild(s);}</script>
@@ -64,7 +66,7 @@
 
     <div class="formcol">
     <div class="card formcard" id="start">
-      <div class="f-top"><p class="f-title">Book your discovery call</p><p class="f-count" id="fcount" aria-live="polite">Step 1 of 7</p></div>
+      <div class="f-top"><p class="f-title">Book your discovery call</p><p class="f-count" id="fcount" aria-live="polite">Step 1 of 8</p></div>
       <div class="f-bar" aria-hidden="true"><i id="fbar"></i></div>
       <p class="f-hrs"><b>Seeing patients all day?</b> Discovery calls run 5am to 11pm, 7 days a week.</p>
       <form id="lead" novalidate>
@@ -177,6 +179,13 @@
         </div>
         <p class="f-msg" id="fmsg" role="alert"></p>
       </form>
+      <!-- Step 8: the booking calendar opens here, in the card, once the lead is saved. -->
+      <div class="f-cal" id="fcal" hidden>
+        <p class="f-done" id="fcalh" tabindex="-1">Last step: pick your call time</p>
+        <p class="f-calsub" id="fcalsub">30 minutes, by phone. Your answers are already with Medico, so you won't repeat yourself.</p>
+        <div class="calbox" id="cal1"></div>
+        <p class="calfall">Calendar not loading? <a href="https://calendly.com/medicoconstruction/30min" target="_blank" rel="noopener">Open it in a new tab</a> or call <a href="tel:+16046444120">604-644-4120</a>.</p>
+      </div>
       <div class="f-foot"><span>60 seconds, then pick your call time</span><a href="privacy.html">Privacy policy</a></div>
     </div>
     </div>
@@ -396,13 +405,18 @@
 <!-- 9b. THE CALL (v2, appointment setting) -->
 <section class="sec tint" id="call">
   <div class="wrap">
-    <div class="head"><h2>Your 30-minute discovery call</h2><p>Book a time that works around your patients. Early mornings and late evenings are open.</p></div>
+    <div class="head"><h2>Book your 30-minute discovery call</h2><p>Pick a time that works around your patients. Early mornings and late evenings are open.</p></div>
+    <div class="callgrid">
     <ol class="next3" data-anim="rise">
       <li><h3>Pick a time that suits you</h3><p>Calls run 5am to 11pm, 7 days a week, so you don't have to step away from patients.</p></li>
       <li><h3>Talk through your space</h3><p>The clinic you're planning, the space, its size and your opening date. Have the address, a floor plan or a lease draft handy if you have one.</p></li>
       <li><h3>Leave with the next steps</h3><p>What your space will need and the main design, approval and construction milestones around your opening date. Next comes a no-cost site assessment.</p></li>
     </ol>
-    <a class="btn" href="#start" data-goform>Book My Discovery Call</a>
+    <div>
+      <div class="calbox" id="cal2" aria-label="Book a discovery call"></div>
+      <p class="calfall">Prefer to talk now? Call <a href="tel:+16046444120">604-644-4120</a>.</p>
+    </div>
+    </div>
   </div>
 </section>
 
