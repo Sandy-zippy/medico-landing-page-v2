@@ -13,7 +13,8 @@
 <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
 <style>
 .ty{padding:64px 0 80px;background:linear-gradient(180deg,var(--tint),#fff 75%)}
-.ty .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:56px;align-items:start}
+.ty .grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);grid-template-areas:"txt cal" "mine cal";gap:32px 48px;align-items:start}
+.txtcol{grid-area:txt}.calcol{grid-area:cal}.minecol{grid-area:mine}
 .ty .done{display:block;width:64px;height:64px;margin-bottom:24px}
 .ty .done circle{fill:none;stroke:var(--blue);stroke-width:3;stroke-dasharray:190;stroke-dashoffset:0}
 .ty .done path{fill:none;stroke:var(--blue);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:0}
@@ -44,6 +45,7 @@
 .type .yours{position:absolute;top:14px;left:14px;padding:6px 10px;border-radius:6px;background:var(--blue);color:#fff;font:700 12px/1 var(--h);letter-spacing:.06em}
 .type.is-yours{outline:3px solid var(--blue);outline-offset:3px}
 @media (max-width:1080px){.ty .grid{grid-template-columns:1fr;gap:32px}.types{grid-template-columns:1fr 1fr}}
+@media (max-width:1080px){.ty .grid{grid-template-columns:1fr;grid-template-areas:"txt" "cal" "mine"}}
 @media (max-width:720px){.ty{padding:36px 0 56px}.next3,.types{grid-template-columns:1fr}.type{aspect-ratio:16/10}}
 </style>
 <!-- GA4 G-HSJ06CG134 (ZippyScale-owned property "Medico - build.medicoconstruction.com"). Page views only; the lead event fires on the form page. -->
@@ -82,12 +84,11 @@
 <main>
 <section class="ty">
   <div class="wrap grid">
-    <div>
+    <div class="txtcol">
       <p class="preview" id="preview" hidden>Preview copy (v2): nothing was sent to Medico.</p>
       <svg class="done" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29"/><path d="M20 33l8 8 16-17"/></svg>
       <h1 data-in="1" id="tyh">Now pick a time for your discovery call.</h1>
       <p class="lead" data-in="2" id="tyl">30 minutes, any day from 5am to 11pm. Your answers are already with Medico, so you won't repeat yourself.</p>
-      <a class="btn" href="#book" data-in="3">Pick My Call Time</a>
       <ul class="proof" data-in="3" aria-label="Ratings and credentials">
         <li><svg class="g"><use href="#i-g"/></svg><span><b>5.0 <i aria-hidden="true">★★★★★</i></b>Google rating</span></li>
         <li><span class="bbb" aria-hidden="true">BBB</span><span><b>A+</b>BBB rating</span></li>
@@ -95,19 +96,15 @@
         <li><span class="ic"><svg><use href="#i-check"/></svg></span><span><b>Licensed</b>&amp; insured</span></li>
       </ul>
     </div>
-    <aside class="card mine" data-in="4" id="mine" hidden>
+    <div class="calcol" id="book">
+      <div class="calbox" id="cal"></div>
+      <p class="calfall">Calendar not loading? <a id="calurl" href="https://calendly.com/medicoconstruction/30min" target="_blank" rel="noopener">Open it in a new tab</a> or call <a href="tel:+16046444120">604-644-4120</a>.</p>
+    </div>
+    <aside class="card mine minecol" data-in="4" id="mine" hidden>
       <h2>Your project</h2>
       <dl id="mine-dl"></dl>
       <p class="call">Prefer to talk now? <a href="tel:+16046444120">604-644-4120</a></p>
     </aside>
-  </div>
-</section>
-
-<section class="sec" id="book">
-  <div class="wrap">
-    <div class="head"><h2>Choose your call time</h2></div>
-    <div class="calbox" id="cal"></div>
-    <p class="calfall">Calendar not loading? <a id="calurl" href="https://calendly.com/medicoconstruction/30min" target="_blank" rel="noopener">Open it in a new tab</a> or call <a href="tel:+16046444120">604-644-4120</a>.</p>
   </div>
 </section>
 
