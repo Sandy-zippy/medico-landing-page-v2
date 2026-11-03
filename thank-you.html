@@ -190,8 +190,9 @@ fbq("init","1088731400165523", medicoAm);fbq("track","PageView");
 var BOOKING_URL = "https://calendly.com/medicoconstruction/30min";
 function medicoCal() {
   var d = {}; try { d = JSON.parse(sessionStorage.getItem("medico_thanks") || "{}"); } catch (e) {}
-  Calendly.initInlineWidget({ url: BOOKING_URL + "?hide_gdpr_banner=1", parentElement: document.getElementById("cal"),
-    prefill: { name: d.full_name || "", email: d.email || "" } });
+  // Name + email go only to the booking calendar (never into this page's own URL).
+  var q = "?hide_gdpr_banner=1" + (d.full_name ? "&name=" + encodeURIComponent(d.full_name) : "") + (d.email ? "&email=" + encodeURIComponent(d.email) : "");
+  Calendly.initInlineWidget({ url: BOOKING_URL + q, parentElement: document.getElementById("cal") });
 }
 // Booked: say so, and count it (GA4 + Meta Schedule; both are switched off outside the live address).
 window.addEventListener("message", function (e) {
